@@ -1,9 +1,9 @@
 function validateCardNumber(value) {
-    // Accept only digits, dashes or spaces
-	if (/[^0-9-\s]+/.test(value)) return false;
+    return !(/[^0-9-\s]+/.test(value));
+}
 
-	// The Luhn Algorithm
-	let nCheck = 0, bEven = false;
+function luhnAlghorithm(value) {
+    let nCheck = 0, bEven = false;
 	value = value.replace(/\D/g, "");
 
 	for (let n = value.length - 1; n >= 0; n--) {
@@ -20,7 +20,6 @@ function validateCardNumber(value) {
 
 // Card recognition function - first char is reserved for card type
 function whatCard(value) {
-    const icon = document.querySelector('.icon');
     switch(value[0]) {
         case '3': {
             icon.classList.add('fa-cc-amex');
@@ -46,16 +45,16 @@ function whatCard(value) {
     }
 }
 
+const icon = document.querySelector('.icon');
 let myCard = document.querySelector('#cardNumber');
 let cvv = document.querySelector('#cvv');
-console.log("cvv", cvv)
 
 function cardValidation()
 {
     myCard = document.querySelector('#cardNumber')
     const val = myCard.value;
     const err = document.querySelector("#err");
-    if (!validateCardNumber(val)) {
+    if (!validateCardNumber(val) || !luhnAlghorithm(val)) {
         err.innerHTML="Wrong Card Number";
     } else {
         err.innerHTML = "";
