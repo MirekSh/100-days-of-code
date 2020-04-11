@@ -55,9 +55,9 @@ function cardValidation()
     const val = myCard.value;
     const err = document.querySelector("#err");
     if (!validateCardNumber(val) || !luhnAlghorithm(val)) {
-        err.innerHTML="Wrong Card Number";
+        err.textContent="Wrong Card Number";
     } else {
-        err.innerHTML = "";
+        err.textContent = "";
         whatCard(val);
     }
 }
@@ -68,9 +68,9 @@ function cvvValidation()
     const cvvVal = cvv.value;
     const errVal = document.querySelector("#cvvErr");
     if (!(/^[0-9]{3,4}$/.test(cvvVal))) {
-        errVal.innerHTML="Wrong CVV Number";
+        errVal.textContent="Wrong CVV Number";
     } else {
-        errVal.innerHTML = "";
+        errVal.textContent = "";
     }
 }
 
