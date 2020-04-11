@@ -2,7 +2,7 @@ function validateCardNumber(value) {
     // Accept only digits, dashes or spaces
 	if (/[^0-9-\s]+/.test(value)) return false;
 
-	// The Luhn Algorithm. It's so pretty.
+	// The Luhn Algorithm
 	let nCheck = 0, bEven = false;
 	value = value.replace(/\D/g, "");
 
@@ -18,6 +18,7 @@ function validateCardNumber(value) {
 	return (nCheck % 10) == 0;
 }
 
+// Card recognition function - first char is reserved for card type
 function whatCard(value) {
     const icon = document.querySelector('.icon');
     switch(value[0]) {
@@ -45,10 +46,13 @@ function whatCard(value) {
     }
 }
 
-function formValidation(e)
+let myCard = document.querySelector('#cardNumber');
+let cvv = document.querySelector('#cvv');
+console.log("cvv", cvv)
+
+function cardValidation()
 {
-    e.preventDefault();
-    const myCard = document.querySelector('#cardNumber');
+    myCard = document.querySelector('#cardNumber')
     const val = myCard.value;
     const err = document.querySelector("#err");
     if (!validateCardNumber(val)) {
@@ -59,5 +63,17 @@ function formValidation(e)
     }
 }
 
-var form = document.getElementById("myForm");
-form.addEventListener('submit', formValidation);
+function cvvValidation()
+{
+    cvv = document.querySelector('#cvv');
+    const cvvVal = cvv.value;
+    const errVal = document.querySelector("#cvvErr");
+    if (!(/^[0-9]{3,4}$/.test(cvvVal))) {
+        errVal.innerHTML="Wrong CVV Number";
+    } else {
+        errVal.innerHTML = "";
+    }
+}
+
+myCard.addEventListener('input', cardValidation);
+cvv.addEventListener('input', cvvValidation);

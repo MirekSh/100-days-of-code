@@ -243,6 +243,7 @@ input:invalid {
 }
 
 span {
+    height: 24px;
     color:red;
     padding-bottom: 10px;
 }
