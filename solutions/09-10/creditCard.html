@@ -17,19 +17,20 @@
                     <span id="errOwner"></span>
                 </div>
                 <div class="form-group" id="card-number-field">
-                    <label for="cardNumber">Card Number<i class="icon fa"></i></label>
+                    <label for="cardNumber">Card Number<i class="fa" id="icon"></i></label>
                     <input type="text" class="form-control" id="cardNumber" value="">
-                    <span id="err"></span>
+                    <span id="errCard"></span>
                 </div>
                 <div class="validation form-group">
-                    <div class="expirtion-date" id="expiration-date">
+                    <div class="expiration-date" id="expiration-date">
                         <label>Expiration Date</label>
-                        <input type="text" class="form-control" id="exp-date">
+                        <input type="text" class="form-control" id="exp-date" placeholder="MM/YY">
+                        <span id="errDate"></span>
                     </div>
                     <div class="cvv" id="cvv-number">
                         <label>CVV</label>
                         <input type="text" class="form-control" id="cvv">
-                        <span id="cvvErr"></span>
+                        <span id="errCvv"></span>
                     </div>
                 </div>
                 <div class="form-group" id="pay-now">

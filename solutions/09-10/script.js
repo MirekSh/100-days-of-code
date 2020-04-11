@@ -45,15 +45,19 @@ function whatCard(value) {
     }
 }
 
-const icon = document.querySelector('.icon');
-let myCard = document.querySelector('#cardNumber');
-let cvv = document.querySelector('#cvv');
+const icon = document.querySelector('#icon');
+const myCard = document.querySelector('#cardNumber');
+const err = document.querySelector("#errCard");
+const owner = document.querySelector('#owner');
+const errOwner = document.querySelector("#errOwner");
+const expDate = document.querySelector('#exp-date');
+const errDate = document.querySelector('#errDate');
+const cvv = document.querySelector('#cvv');
+const errCvv = document.querySelector("#errCvv");
 
 function cardValidation()
 {
-    myCard = document.querySelector('#cardNumber')
     const val = myCard.value;
-    const err = document.querySelector("#err");
     if (!validateCardNumber(val) || !luhnAlghorithm(val)) {
         err.textContent="Wrong Card Number";
     } else {
@@ -64,15 +68,30 @@ function cardValidation()
 
 function cvvValidation()
 {
-    cvv = document.querySelector('#cvv');
-    const cvvVal = cvv.value;
-    const errVal = document.querySelector("#cvvErr");
-    if (!(/^[0-9]{3,4}$/.test(cvvVal))) {
-        errVal.textContent="Wrong CVV Number";
-    } else {
-        errVal.textContent = "";
+    !(/^[0-9]{3,4}$/.test(cvv.value)) ?
+        errCvv.textContent="Wrong CVV value" :
+        errCvv.textContent = "";
+}
+
+function ownerValidation() {
+    !(/^[a-zA-Z\s]*$/.test(owner.value)) ?
+        errOwner.textContent="Use only letters and spaces" :
+        errOwner.textContent = "";
+}
+
+function dateValidation() {
+    const date = expDate.value.split('/');
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const yearInDate = String(year).slice(-2);
+    if (expDate.value.length === 5) {
+        (date[0] < 1 || date[0] > 12) || date[1] < yearInDate ? errDate.textContent = "Wrong date" :
+        errDate.textContent = "";
     }
 }
 
+
+owner.addEventListener('input', ownerValidation);
 myCard.addEventListener('input', cardValidation);
 cvv.addEventListener('input', cvvValidation);
+expDate.addEventListener('input', dateValidation);
