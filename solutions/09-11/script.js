@@ -1,3 +1,10 @@
+const cardTypes = {
+    amex: '3',
+    visa: '4',
+    mastercard: '5',
+    discover: '6',
+}
+
 function validateCardNumber(value) {
     return !(/[^0-9-\s]+/.test(value));
 }
@@ -21,26 +28,24 @@ function luhnAlghorithm(value) {
 // Card recognition function - first char is reserved for card type
 function whatCard(value) {
     switch(value[0]) {
-        case '3': {
+        case cardTypes.amex: {
             icon.classList.add('fa-cc-amex');
             break;
         }
-        case '4': {
+        case cardTypes.visa: {
             icon.classList.add('fa-cc-visa');
             break;
         }
-        case '5': {
+        case cardTypes.mastercard: {
             icon.classList.add('fa-cc-mastercard');
             break;
         }
-        case '6': {
+        case cardTypes.discover: {
             icon.classList.add('fa-cc-discover');
             break;
         }
         default: {
-            icon.className = "";
-            icon.classList.add('icon');
-            icon.classList.add('fa');
+            icon.className = "icon fa";
         }
     }
 }
@@ -66,32 +71,28 @@ function cardValidation()
     }
 }
 
-function cvvValidation()
-{
-    !(/^[0-9]{3,4}$/.test(cvv.value)) ?
-        errCvv.textContent="Wrong CVV value" :
-        errCvv.textContent = "";
-}
-
 function ownerValidation() {
     !(/^[a-zA-Z\s]*$/.test(owner.value)) ?
         errOwner.textContent="Use only letters and spaces" :
         errOwner.textContent = "";
 }
 
-function dateValidation() {
-    const date = expDate.value.split('/');
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const yearInDate = String(year).slice(-2);
-    if (expDate.value.length === 5) {
-        (date[0] < 1 || date[0] > 12) || date[1] < yearInDate ? errDate.textContent = "Wrong date" :
-        errDate.textContent = "";
+function formatValidation() {
+    if ((/^\d{2}\/\d{2}$/).test(expDate.value)) {
+        const date = expDate.value.split('/');
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const yearInDate = String(year).slice(-2);
+        return (date[0] < 1 || date[0] > 12) || date[1] < yearInDate;
     }
+    return false
 }
 
+function dateValidation() {
+    formatValidation() ? errDate.textContent = "Wrong date" :
+        errDate.textContent = "";
+}
 
 owner.addEventListener('input', ownerValidation);
 myCard.addEventListener('input', cardValidation);
-cvv.addEventListener('input', cvvValidation);
 expDate.addEventListener('input', dateValidation);
