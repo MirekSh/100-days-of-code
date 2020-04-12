@@ -79,11 +79,12 @@ function ownerValidation() {
 
 function formatValidation() {
     if ((/^\d{2}\/\d{2}$/).test(expDate.value)) {
-        const date = expDate.value.split('/');
+        const date = new Date(`01/${expDate.value}`);
+        const monthInDate = date.getMonth() + 1;
+        const yearInDate = date.getFullYear();
         const currentDate = new Date();
         const year = currentDate.getFullYear();
-        const yearInDate = String(year).slice(-2);
-        return (date[0] < 1 || date[0] > 12) || date[1] < yearInDate;
+        return isNaN(monthInDate) || (monthInDate < 1 || monthInDate > 12) || yearInDate < year;
     }
     return false
 }
