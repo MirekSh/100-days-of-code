@@ -22,7 +22,6 @@ let audioFlag = false;
 let randomFlag = false;
 
 function setSong() {
-    console.log(songIndex);
     song.textContent = music[songIndex][0];
     artist.textContent = music[songIndex][1];
 }
