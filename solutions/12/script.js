@@ -1,4 +1,4 @@
-const music = [["Yummy", "Justin Bieber"], ["Life Is Good", "Future featuring Drake"], ["Godzilla", "Eminem featuring Juice Wrld"], ["Don't Start Now", "Dua Lipa"], ["Intentions", "Justin Bieber featuring Quavo"], ["Blinding Lights", "The Weeknd"], ["On", "BTS"], ["Stupid Love", "Lady Gaga"], ["Baby Pluto", "Lil Uzi Vert"], ["Lo Mein", "Lil Uzi Vert"], ["Silly Watch", "Lil Uzi Vert"], ["Adore You", "Harry Styles"], ["Say So", "Doja Cat"]];
+const music = [{ title: "Yummy", author: "Justin Bieber"}, { title: "Life Is Good", author: "Future featuring Drake"}, { title: "Godzilla", author: "Eminem featuring Juice Wrld"}, { title: "Don't Start Now", author: "Dua Lipa"}, { title: "Intentions", author: "Justin Bieber featuring Quavo"}, { title: "Blinding Lights", author: "The Weeknd"}, { title: "On", author: "BTS"}, { title: "Stupid Love", author: "Lady Gaga"}, { title: "Baby Pluto", author: "Lil Uzi Vert"}, { title: "Lo Mein", author: "Lil Uzi Vert"}, { title: "Silly Watch", author: "Lil Uzi Vert"}, { title: "Adore You", author: "Harry Styles"}, { title: "Say So", author: "Doja Cat"}];
 
 // DOM elements
 const song = document.querySelector('.song');
@@ -16,24 +16,24 @@ const progress = document.querySelector('.custom-progress')
 const musicArrLength = music.length;
 let songIndex = 0;
 progress.value = 0;
+let request;
 
 // Flags
 let playFlag = false;
-let audioFlag = false;
 let randomFlag = false;
 
 function setSong() {
-    song.textContent = music[songIndex][0];
-    artist.textContent = music[songIndex][1];
+    song.textContent = music[songIndex].title;
+    artist.textContent = music[songIndex].author;
 }
 
-function randomSong() {
+function setRandomSongIndex() {
     const random = Math.floor(Math.random() * musicArrLength);
     songIndex = random;
 }
 function nextSong() {
     randomFlag
-        ? randomSong()
+        ? setRandomSongIndex()
         : songIndex === musicArrLength - 1
             ? songIndex = 0
             : songIndex += 1;
@@ -42,7 +42,7 @@ function nextSong() {
 
 function previousSong() {
     randomFlag
-        ? randomSong()
+        ? setRandomSongIndex()
         : songIndex === 0
             ? songIndex = musicArrLength - 1
             : songIndex -= 1;
@@ -52,46 +52,42 @@ function previousSong() {
 function updateProgressBar() {
     const progressPercentage = audioElement.currentTime / audioElement.duration;
     progress.value = progressPercentage;
+    requestAnimationFrame(updateProgressBar);
 }
+
+requestAnimationFrame(updateProgressBar);
 
 // Event listeners
 previousBtn.addEventListener('click', previousSong);
 nextBtn.addEventListener('click', nextSong);
 randomBtn.addEventListener('click', () => {
     randomFlag = !randomFlag;
-    randomFlag ? randomBtn.classList.add('active') : randomBtn.classList.remove('active');
+    randomBtn.classList.toggle('active');
 })
+
 audioBtn.addEventListener('click', () => {
-    if(audioFlag) {
-        audioBtn.classList.remove('fa-volume-up');
-        audioBtn.classList.add('fa-volume-off');
-    } else {
-        audioBtn.classList.remove('fa-volume-off');
-        audioBtn.classList.add('fa-volume-up');
-    }
-    audioFlag = !audioFlag;
+    audioBtn.classList.toggle('fa-volume-up');
+    audioBtn.classList.toggle('fa-volume-off');
+    audioElement.muted = !audioElement.muted
 })
 
 playBtn.addEventListener('click', () => {
-    if(playFlag && audioElement.paused) {
-        audioElement.play();
-        playBtn.classList.remove('fa-play');
-        playBtn.classList.add('fa-pause');
-    } else {
-        playBtn.classList.remove('fa-pause');
-        playBtn.classList.add('fa-play');
+    if(playFlag) {
         audioElement.pause();
+    } else {
+        audioElement.play();
     }
+    playBtn.classList.toggle('fa-pause');
+    playBtn.classList.toggle('fa-play');
     playFlag = !playFlag;
 })
 
 replayBtn.addEventListener('click', () => {
     audioElement.currentTime = 0;
     audioElement.play();
-    playBtn.classList.remove('fa-play');
-    playBtn.classList.add('fa-pause');
+    playBtn.classList.toggle('fa-play');
+    playBtn.classList.toggle('fa-pause');
 })
 
 // Functions to run
 setSong();
-setInterval(updateProgressBar, 10);
