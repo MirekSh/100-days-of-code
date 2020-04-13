@@ -15,6 +15,7 @@ const progress = document.querySelector('.custom-progress')
 
 const musicArrLength = music.length;
 let songIndex = 0;
+progress.value = 0;
 
 // Flags
 let playFlag = false;
@@ -82,6 +83,13 @@ playBtn.addEventListener('click', () => {
         audioElement.pause();
     }
     playFlag = !playFlag;
+})
+
+replayBtn.addEventListener('click', () => {
+    audioElement.currentTime = 0;
+    audioElement.play();
+    playBtn.classList.remove('fa-play');
+    playBtn.classList.add('fa-pause');
 })
 
 // Functions to run
