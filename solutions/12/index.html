@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Music Player</title>
+</head>
+<body>
+    <div class="container">
+       <div class="center">
+            <div class="header">
+                <i class="fa fa-bars fa-3x hamburger"></i>
+                <i class="fa fa-volume-up fa-3x audio"></i>
+            </div>
+            <div class="title">
+                <h3 class="song"></h3>
+                <h2 class="artist"></h2>
+            </div>
+            <div class="equalizer">
+                <img src="img/hiclipart.png" alt="equalizer">
+            </div>
+            <div class="audio-player">
+                <audio class="audioElement" src="./media/mp3_2mb.mp3"></audio>
+                <progress class="progress custom-progress" value="0" max="1"></progress>
+            </div>
+            <div class="controls">
+                <ul>
+                    <li><i class="fa fa-repeat fa-2x replay"></i></li>
+                    <li><ul>
+                        <li><i class="fa fa-angle-left fa-3x previous"></i></li>
+                        <li><i class="fa fa-play fa-3x play"></i></li>
+                        <li><i class="fa fa-angle-right fa-3x next"></i></li>
+                    </ul></li>
+                    <li><i class="fa fa-random fa-2x random"></i></li>
+                </ul>
+            </div>
+       </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
